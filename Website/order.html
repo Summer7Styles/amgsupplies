@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Place an order for your building materials.">
+    <title>Place Order - Building Materials Supplier</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        <h1>Place Your Order</h1>
+    </header>
+
+    <section class="order-form">
+        <h2>Order Details</h2>
+        <p>Please fill out the form below to place your order for the selected product.</p>
+
+        <!-- Order Form -->
+        <form id="orderForm" onsubmit="return submitOrder(event)">
+            <!-- Product Name (User selects or enters a product) -->
+            <label for="product-name">Product</label>
+            <select id="product-name" name="product-name" required>
+                <option value="" disabled selected>Select a product</option>
+                <!-- Cement Products -->
+                <option value="Dangote Cement">Dangote Cement</option>
+                <option value="Diamond Cement">Diamond Cement</option>
+                <option value="GHACEM Cement">GHACEM Cement</option>
+                <option value="POP Cement">POP Cement</option>
+                <!-- Steel Reinforcements -->
+                <option value="Mild Steel">Mild Steel</option>
+                <option value="High Tensile Steel">High Tensile Steel</option>
+                <!-- Roofing Materials -->
+                <option value="Clay Tiles">Clay Tiles</option>
+                <option value="Metal Roofing Sheets">Metal Roofing Sheets</option>
+                <option value="Asphalt Shingles">Asphalt Shingles</option>
+                <!-- Paint & Finishing Materials -->
+                <option value="Interior Paint">Interior Paint</option>
+                <option value="Exterior Paint">Exterior Paint</option>
+                <option value="Varnish">Varnish</option>
+                <!-- Plumbing Supplies -->
+                <option value="PVC Pipes">PVC Pipes</option>
+                <option value="CPVC Pipes">CPVC Pipes</option>
+                <option value="PPR Pipes">PPR Pipes</option>
+                <!-- Electrical Equipment -->
+                <option value="Wiring">Wiring</option>
+                <option value="Circuit Breakers">Circuit Breakers</option>
+                <option value="Electrical Cables">Electrical Cables</option>
+            </select>
+
+            <!-- Product Price (will be filled dynamically based on product selection) -->
+            <label for="product-price">Price</label>
+            <input type="text" id="product-price" name="product-price" readonly>
+
+            <!-- Quantity to Order -->
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" name="quantity" required min="1">
+
+            <!-- Customer's Name -->
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <!-- Delivery Address -->
+            <label for="address">Delivery Address</label>
+            <textarea id="address" name="address" required></textarea>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-button">Submit Order</button>
+        </form>
+
+        <!-- Confirmation Message -->
+        <div id="confirmationMessage" style="display:none; color:green; margin-top:20px;">
+            <h3>Order Submitted Successfully!</h3>
+            <p>Thank you for your order. We will contact you soon for further details.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Building Materials Supplier Co. | All rights reserved</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // JavaScript to dynamically set the price based on the selected product
+        document.getElementById('product-name').addEventListener('change', function() {
+            const productPriceField = document.getElementById('product-price');
+            const product = this.value;
+
+            // Set product price based on selection
+            switch (product) {
+                // Cement Products
+                case 'Dangote Cement':
+                    productPriceField.value = '$50 per bag';
+                    break;
+                case 'Diamond Cement':
+                    productPriceField.value = '$55 per bag';
+                    break;
+                case 'GHACEM Cement':
+                    productPriceField.value = '$60 per bag';
+                    break;
+                case 'POP Cement':
+                    productPriceField.value = '$52 per bag';
+                    break;
+                // Steel Reinforcements
+                case 'Mild Steel':
+                    productPriceField.value = '$12 per meter';
+                    break;
+                case 'High Tensile Steel':
+                    productPriceField.value = '$18 per meter';
+                    break;
+                // Roofing Materials
+                case 'Clay Tiles':
+                    productPriceField.value = '$3 per tile';
+                    break;
+                case 'Metal Roofing Sheets':
+                    productPriceField.value = '$5 per sheet';
+                    break;
+                case 'Asphalt Shingles':
+                    productPriceField.value = '$2.5 per sheet';
+                    break;
+                // Paint & Finishing Materials
+                case 'Interior Paint':
+                    productPriceField.value = '$30 per gallon';
+                    break;
+                case 'Exterior Paint':
+                    productPriceField.value = '$35 per gallon';
+                    break;
+                case 'Varnish':
+                    productPriceField.value = '$15 per gallon';
+                    break;
+                // Plumbing Supplies
+                case 'PVC Pipes':
+                    productPriceField.value = '$8 per meter';
+                    break;
+                case 'CPVC Pipes':
+                    productPriceField.value = '$10 per meter';
+                    break;
+                case 'PPR Pipes':
+                    productPriceField.value = '$12 per meter';
+                    break;
+                // Electrical Equipment
+                case 'Wiring':
+                    productPriceField.value = '$20 per roll';
+                    break;
+                case 'Circuit Breakers':
+                    productPriceField.value = '$40 each';
+                    break;
+                case 'Electrical Cables':
+                    productPriceField.value = '$50 per roll';
+                    break;
+                default:
+                    productPriceField.value = '';
+                    break;
+            }
+        });
+
+        // Function to handle form submission
+        function submitOrder(event) {
+            event.preventDefault(); // Prevent actual form submission to server
+
+            // Hide the form and show the confirmation message
+            document.getElementById('orderForm').style.display = 'none';
+            document.getElementById('confirmationMessage').style.display = 'block';
+
+            // You can add additional logic here to process the order, such as sending it to a server
+            return false; // To prevent page refresh
+        }
+    </script>
+</body>
+</html>
